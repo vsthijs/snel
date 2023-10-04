@@ -1,0 +1,13 @@
+import std from "linux.snel";
+
+
+module math {
+    fn add(a: int, b: int) int {
+        c: int = a + b;
+        c
+    }
+
+    fn subtract(a: int, b: int) int {
+        a - b
+    }
+}
