@@ -1,6 +1,25 @@
 module x86 {
-    const is_x86: bool;
-    const is_x86_64: bool;
+
+    $if($is_x86_64)
+        const is_x86: bool = true;
+        const is_x86_64: bool = true;
+
+        type uint = u64;
+        type sint = i64;
+        type fint = f64;
+        type uptr = &any;
+    $elif($is_x86)
+        const is_x86: bool = true;
+        const is_x86_64: bool = false;
+
+        type uint = u32;
+        type sint = i32;
+        type fint = f32;
+        type uptr = &any;
+    $else
+        const is_x86: bool = false;
+        const is_x86_64: bool = false;
+    $endif
 
     enum Register {
         rax, eax, ax,
@@ -19,13 +38,41 @@ module x86 {
         r13, r13d, r13w,
         r14, r14d, r14w,
         r15, r15d, r15w,
-    };
-
-    asm fn set_rax(value: u64) {
-        _asm("mov rax, {value}");
     }
 
-    asm fn set_rbx(value: u64) {
-        _asm
+    type Destination {
+        register: Register,
+        address: uptr,
+    } {
+        fn is_register() bool;
+        fn is_address() bool;
+        fn get_register() !Register;
+        fn get_address() !uptr;
     }
+
+    /* mov [dst], [src] */
+    asm fn mov_r(dst: Register, src: Register);
+    
+    /* mov [dst], src */
+    asm fn mov_u8(dst: Register, src: u8);
+    asm fn mov_u16(dst: Register, src: u16);
+    asm fn mov_u32(dst: Register, src: u32);
+    asm fn mov_u64(dst: Register, src: u64);
+
+    /* push [src] */
+    asm fn push(src: Register);
+
+    $if($is_x86_64)
+        /* push src */
+        asm fn push(src: uint);
+        
+        asm fn pop() uint;
+    $elif($is_x86)
+        /* push src */
+        asm fn push(src: uint);
+        
+        asm fn pop(dst: Register);
+
+        /*  */
+    $endif
 }
