@@ -1,0 +1,8 @@
+import x86 from "x86.snel";
+
+module std {
+    fn sys_read(fd: u32, buf: *u8, usize count) u32 {}
+    fn sys_write(fd: u32, buf: *u8, usize count) u32 {}
+    fn sys_open(filename: *u8, flags: u32, mode: u32) u32 {}
+    fn sys_close(fd: Int) Int {}
+}

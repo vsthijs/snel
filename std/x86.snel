@@ -1,0 +1,31 @@
+module x86 {
+    const is_x86: bool;
+    const is_x86_64: bool;
+
+    enum Register {
+        rax, eax, ax,
+        rbx, ebx, bx,
+        rcx, ecx, cx,
+        rdx, edx, dx,
+        rsi, esi, si,
+        rdi, edi, di,
+        rsp, esp, sp,
+        rbp, ebp, bp,
+        r8, r8d, r8w,
+        r9, r9d, r9w,
+        r10, r10d, r10w,
+        r11, r11d, r11w,
+        r12, r12d, r12w,
+        r13, r13d, r13w,
+        r14, r14d, r14w,
+        r15, r15d, r15w,
+    };
+
+    asm fn set_rax(value: u64) {
+        _asm("mov rax, {value}");
+    }
+
+    asm fn set_rbx(value: u64) {
+        _asm
+    }
+}
